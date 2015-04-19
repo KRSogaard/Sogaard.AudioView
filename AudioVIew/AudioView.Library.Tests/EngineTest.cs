@@ -1,4 +1,5 @@
 ﻿using System;
+using AudioView.Library.SoundMeter;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AudioView.Library.Tests
@@ -43,6 +44,13 @@ namespace AudioView.Library.Tests
         }
 
         [TestMethod]
+        public void Test_Call_Stop_On_None_Started()
+        {
+            this.engine.Stop();
+            this.soundLevelMeter.Verify(x=> x.Close(), Times.Once());
+        }
+
+        [TestMethod]
         public void Test_Start_Started_The_Sound_Level_Meter()
         {
             this.engine.Start();
@@ -58,10 +66,10 @@ namespace AudioView.Library.Tests
         }
 
         [TestMethod]
-        public void Test_Stop_On_Not_Started_Should_Not_Call_Stop_On_The_Meter()
+        public void Test_Stop_On_Not_Started_Should_Still_Call_Close_On_The_Meter()
         {
             this.engine.Stop();
-            this.soundLevelMeter.Verify(x => x.Close(), Times.Never());
+            this.soundLevelMeter.Verify(x => x.Close(), Times.Once());
         }
 
         [TestMethod]

@@ -40,6 +40,10 @@ namespace AudioView.Library
 
         public Engine(ISoundLevelMeter soundLevelMeter)
         {
+            if (soundLevelMeter == null)
+            {
+                throw new ArgumentNullException();
+            }
             this.SoundLevelMeter = soundLevelMeter;
         }
 
@@ -49,7 +53,6 @@ namespace AudioView.Library
 
             this.MinuteReadings = new List<Tuple<DateTime, Dictionary<string, double>>>();
             this.LastMinuteCalculation = DateTime.Now;
-            this.CancellationToken = new CancellationTokenSource();
             this.Timer = new System.Timers.Timer(this.ReadingInterval);
             this.Timer.Elapsed += this.TimerOnElapsed;
             this.Timer.Start();
@@ -145,14 +148,10 @@ namespace AudioView.Library
 
         public void Stop()
         {
-            // Never been started
-            if (this.CancellationToken == null)
+            if (this.Timer != null)
             {
-                return;
+                this.Timer.Stop();
             }
-
-            this.CancellationToken.Cancel();
-            this.Timer.Stop();
             this.SoundLevelMeter.Close();
         }
         
