@@ -39,7 +39,7 @@
         {
             this.PortName = portName;
         }
-        
+
         /// <summary>
         /// Open the port to the device
         /// </summary>
@@ -62,8 +62,6 @@
                 this.WriteLine(Lock);
                 // Start the loggin
                 this.WriteLine(StartLog);
-                // Initiate first measurement
-                this.WriteLine(InitiateMeasurement);
             }
             catch (IOException exp)
             {
@@ -103,7 +101,6 @@
                 try
                 {
                     this.SerialPort.Close();
-                    this.SerialPort = null;
                 }
                 catch
                 {

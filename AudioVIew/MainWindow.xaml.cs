@@ -15,14 +15,23 @@ using System.Windows.Shapes;
 
 namespace AudioVIew
 {
+    using DevExpress.Xpf.Ribbon;
+    using ViewModels;
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : DXRibbonWindow
     {
+        private MainViewModel ViewModel { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
+
+            this.ViewModel = new MainViewModel();
+            this.DataContext = this.ViewModel;
+
         }
     }
 }
